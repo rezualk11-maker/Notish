@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Karim Tech Zone</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#07111f;--card:#0d1b2d;--card2:#10243b;--text:#f5f7fb;--muted:#9eb0c7;--accent:#39d98a;--accent2:#4ea1ff;--danger:#ff5d73}
+body{font-family:Arial,"Noto Sans Bengali",sans-serif;background:radial-gradient(circle at 20% 10%,#14375a 0,#07111f 35%,#030811 100%);color:var(--text);min-height:100vh;overflow-x:hidden}
+body:before,body:after{content:"";position:fixed;border-radius:50%;filter:blur(4px);opacity:.18;z-index:-1;animation:float 8s ease-in-out infinite}
+body:before{width:260px;height:260px;background:#39d98a;top:8%;left:-90px}
+body:after{width:320px;height:320px;background:#4ea1ff;right:-120px;bottom:0;animation-delay:2s}
+@keyframes float{50%{transform:translate(35px,-25px) scale(1.08)}}
+.topbar{position:sticky;top:0;z-index:20;background:rgba(4,12,23,.82);backdrop-filter:blur(16px);border-bottom:1px solid #ffffff12;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{font-weight:800;font-size:18px}.brand span{color:var(--accent)}
+.time{font-size:12px;color:var(--muted);text-align:right;line-height:1.5}
+.container{max-width:900px;margin:auto;padding:42px 16px 90px}
+.hero{text-align:center;padding:28px 0 30px;animation:up .7s ease}
+.logo{width:78px;height:78px;border-radius:24px;margin:0 auto 18px;display:grid;place-items:center;font-size:32px;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 15px 45px #39d98a33;animation:pulse 3s infinite}
+@keyframes pulse{50%{transform:translateY(-5px);box-shadow:0 20px 60px #4ea1ff55}}
+h1{font-size:clamp(28px,7vw,48px);margin-bottom:10px}.hero p{color:var(--muted);max-width:620px;margin:auto;line-height:1.7}
+.actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:22px 0}
+.btn{border:0;text-decoration:none;color:white;cursor:pointer;padding:12px 17px;border-radius:13px;font-weight:700;background:linear-gradient(135deg,#1d3653,#12243a);border:1px solid #ffffff12;transition:.25s;display:inline-flex;align-items:center;gap:8px}
+.btn:hover{transform:translateY(-2px);border-color:#39d98a66}.primary{background:linear-gradient(135deg,#16a96a,#2384df)}
+.card{background:linear-gradient(145deg,rgba(16,36,59,.9),rgba(8,21,36,.9));border:1px solid #ffffff10;border-radius:22px;padding:20px;box-shadow:0 20px 70px #0005;animation:up .7s ease}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:10px}.section-title h2{font-size:20px}
+.badge{font-size:11px;color:#07111f;background:var(--accent);padding:6px 9px;border-radius:99px;font-weight:800}
+.rules{display:grid;gap:11px}.rule{display:flex;gap:12px;align-items:flex-start;padding:15px;border-radius:15px;background:#ffffff05;border:1px solid #ffffff08;animation:fade .35s ease}
+.num{min-width:30px;height:30px;border-radius:10px;display:grid;place-items:center;background:#39d98a18;color:var(--accent);font-weight:800}.rule-text{white-space:pre-wrap;line-height:1.6;color:#dce7f4;flex:1}
+.empty{text-align:center;color:var(--muted);padding:30px 10px}
+.admin-btn{position:fixed;right:18px;bottom:18px;width:52px;height:52px;border-radius:50%;border:1px solid #ffffff18;background:#10243b;color:white;cursor:pointer;font-size:21px;box-shadow:0 10px 30px #0008;z-index:30}
+.overlay{display:none;position:fixed;inset:0;background:#0009;backdrop-filter:blur(8px);z-index:50;padding:18px;overflow:auto}
+.modal{max-width:650px;margin:5vh auto;background:#09182a;border:1px solid #ffffff14;border-radius:24px;padding:22px;box-shadow:0 30px 100px #000;animation:pop .25s ease}
+@keyframes pop{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
+input,textarea{width:100%;background:#061221;color:white;border:1px solid #ffffff14;border-radius:13px;padding:13px;margin:7px 0 12px;outline:none}
+input:focus,textarea:focus{border-color:#39d98a88}textarea{min-height:100px;resize:vertical}
+label{font-size:13px;color:var(--muted)}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.close{background:none;border:0;color:white;font-size:25px;cursor:pointer}
+.form-actions{display:flex;gap:9px;flex-wrap:wrap}.danger{background:#ff5d7315;color:#ff8a9a;border:1px solid #ff5d7330}
+.admin-list{display:grid;gap:8px;margin-top:18px}.admin-row{padding:12px;background:#ffffff05;border-radius:13px;display:flex;gap:8px;justify-content:space-between;align-items:center}.admin-row span{flex:1;line-height:1.4}
+.notice{font-size:12px;color:#ffcc76;background:#ffcc7610;border:1px solid #ffcc7625;padding:10px;border-radius:12px;margin-bottom:14px;line-height:1.5}
+.footer{text-align:center;color:#667b94;font-size:12px;margin-top:24px}
+@keyframes up{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:none}}@keyframes fade{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
+@media(max-width:560px){.topbar{align-items:flex-start}.time{font-size:10px}.card{padding:15px}.modal{margin:2vh auto}.admin-row{align-items:flex-start;flex-direction:column}.admin-row .btn{width:100%;justify-content:center}}
+
+/* Premium motion layer */
+html{scroll-behavior:smooth}
+body{background-attachment:fixed}
+body:before{animation:orbOne 10s ease-in-out infinite}
+body:after{animation:orbTwo 12s ease-in-out infinite}
+@keyframes orbOne{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(70px,45px) scale(1.18)}}
+@keyframes orbTwo{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-60px,-55px) scale(1.12)}}
+.topbar{animation:barIn .65s cubic-bezier(.2,.8,.2,1)}
+@keyframes barIn{from{opacity:0;transform:translateY(-100%)}to{opacity:1;transform:none}}
+.brand{animation:brandIn .9s ease both}
+@keyframes brandIn{from{opacity:0;letter-spacing:8px}to{opacity:1;letter-spacing:normal}}
+.hero .logo{animation:logoReveal 1s cubic-bezier(.17,.84,.44,1) both, pulse 3s 1s ease-in-out infinite}
+@keyframes logoReveal{from{opacity:0;transform:scale(.55) rotate(-18deg)}to{opacity:1;transform:scale(1) rotate(0)}}
+.hero h1{animation:titleIn .8s .15s both}
+.hero p{animation:titleIn .8s .28s both}
+.actions{animation:titleIn .8s .4s both}
+@keyframes titleIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.card{transition:transform .35s ease,box-shadow .35s ease,border-color .35s ease}
+.card:hover{transform:translateY(-3px);border-color:#39d98a30;box-shadow:0 28px 90px #0007}
+.btn{position:relative;overflow:hidden}
+.btn:after{content:"";position:absolute;top:-60%;left:-90%;width:55%;height:220%;background:linear-gradient(90deg,transparent,#ffffff35,transparent);transform:skewX(-20deg);transition:.7s}
+.btn:hover:after{left:140%}
+.rule{transition:transform .25s ease,background .25s ease,border-color .25s ease}
+.rule:hover{transform:translateX(5px);background:#ffffff09;border-color:#39d98a28}
+.num{transition:transform .25s ease}
+.rule:hover .num{transform:rotate(8deg) scale(1.08)}
+.time{animation:timeFade 1.2s ease}
+@keyframes timeFade{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:none}}
+.admin-btn{transition:transform .25s ease,box-shadow .25s ease}
+.admin-btn:hover{transform:translateY(-5px) rotate(8deg);box-shadow:0 16px 40px #000a}
+.overlay{animation:overlayIn .2s ease}
+@keyframes overlayIn{from{opacity:0}to{opacity:1}}
+.modal{animation:modalIn .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes modalIn{from{opacity:0;transform:translateY(25px) scale(.96)}to{opacity:1;transform:none}}
+input,textarea{transition:border-color .25s,box-shadow .25s,transform .2s}
+input:focus,textarea:focus{box-shadow:0 0 0 4px #39d98a12;transform:translateY(-1px)}
+.footer{animation:titleIn 1s .6s both}
+@media (prefers-reduced-motion:reduce){
+  *,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Karim <span>Tech Zone</span></div>
+  <div class="time"><div id="date">--</div><div id="clock">--:--:--</div></div>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <div class="logo">K</div>
+    <h1>Karim Tech Zone</h1>
+    <p>প্রয়োজনীয় নিয়ম ও তথ্য এক জায়গায়। নিচের Rules গুলো অনুসরণ করুন।</p>
+    <div class="actions">
+      <a class="btn primary" href="https://t.me/md_rezual_karim" target="_blank">💬 Telegram Help</a>
+      <a class="btn" href="https://t.me/social_workars4" target="_blank">📢 Telegram Channel</a>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="section-title">
+      <h2>📜 Important Rules</h2>
+      <span class="badge" id="count">0 RULES</span>
+    </div>
+    <div class="rules" id="rules"></div>
+  </section>
+
+  <div class="footer">© <span id="year"></span> Karim Tech Zone • All Rights Reserved</div>
+</main>
+
+<button class="admin-btn" onclick="openAdmin()" title="Admin Panel">👤</button>
+
+<div class="overlay" id="loginModal">
+  <div class="modal">
+    <div class="modal-head"><h2>🔐 Admin Login</h2><button class="close" onclick="closeModal('loginModal')">×</button></div>
+    <div class="notice">এই login শুধুমাত্র এই ওয়েবসাইটের Admin Panel-এর জন্য। Gmail-এ লগইন করার জন্য নয়।</div>
+    <label>Admin Email</label>
+    <input id="email" type="email" placeholder="Admin email">
+    <label>Password</label>
+    <input id="password" type="password" placeholder="Password">
+    <div class="form-actions"><button class="btn primary" onclick="login()">Login</button></div>
+    <p id="loginMsg" style="color:#ff8a9a;font-size:13px;margin-top:12px"></p>
+  </div>
+</div>
+
+<div class="overlay" id="adminModal">
+  <div class="modal">
+    <div class="modal-head"><h2>⚙️ Admin Panel</h2><button class="close" onclick="closeModal('adminModal')">×</button></div>
+    <div class="notice">Rules যোগ, Edit এবং Delete করতে পারবেন। Rules এই browser-এর localStorage-এ সংরক্ষিত হবে।</div>
+    <label>New Rule / Rule Edit</label>
+    <textarea id="ruleInput" placeholder="এখানে একটি Rule লিখুন..."></textarea>
+    <div class="form-actions">
+      <button class="btn primary" id="saveBtn" onclick="saveRule()">➕ Add Rule</button>
+      <button class="btn" onclick="clearForm()">Clear</button>
+      <button class="btn danger" onclick="logout()">Logout</button>
+    </div>
+    <div class="admin-list" id="adminList"></div>
+  </div>
+</div>
+
+<script>
+const ADMIN_EMAIL = "karimtechzone@gmail.com";
+const ADMIN_PASSWORD = "Karim@2004";
+const STORAGE_KEY = "karimTechZoneRules";
+
+let rules = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null") || [
+  "সকল নিয়ম ও নির্দেশনা ভালোভাবে পড়ে কাজ করুন।",
+  "কোনো সমস্যায় Telegram Help-এ যোগাযোগ করুন।"
+];
+let editIndex = -1;
+
+function saveData(){localStorage.setItem(STORAGE_KEY,JSON.stringify(rules))}
+function renderRules(){
+  const box=document.getElementById("rules");
+  document.getElementById("count").textContent=rules.length+" RULE"+(rules.length===1?"":"S");
+  if(!rules.length){box.innerHTML='<div class="empty">কোনো Rule যোগ করা হয়নি।</div>';return}
+  box.innerHTML=rules.map((r,i)=>`<div class="rule"><div class="num">${i+1}</div><div class="rule-text">${escapeHtml(r)}</div></div>`).join("");
+}
+function renderAdmin(){
+  const box=document.getElementById("adminList");
+  box.innerHTML=rules.length?rules.map((r,i)=>`
+    <div class="admin-row">
+      <span><b>#${i+1}</b> ${escapeHtml(r)}</span>
+      <div style="display:flex;gap:7px">
+        <button class="btn" onclick="editRule(${i})">✏️ Edit</button>
+        <button class="btn danger" onclick="deleteRule(${i})">🗑️</button>
+      </div>
+    </div>`).join(""):'<div class="empty">No rules yet.</div>';
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function openAdmin(){
+  if(sessionStorage.getItem("adminLoggedIn")==="true"){renderAdmin();openModal("adminModal")}
+  else openModal("loginModal");
+}
+function login(){
+  const e=document.getElementById("email").value.trim(), p=document.getElementById("password").value;
+  if(e===ADMIN_EMAIL && p===ADMIN_PASSWORD){
+    sessionStorage.setItem("adminLoggedIn","true");
+    document.getElementById("email").value="";document.getElementById("password").value="";
+    document.getElementById("loginMsg").textContent="";
+    closeModal("loginModal");renderAdmin();openModal("adminModal");
+  }else document.getElementById("loginMsg").textContent="❌ Email অথবা Password ভুল।";
+}
+function saveRule(){
+  const text=document.getElementById("ruleInput").value.trim();
+  if(!text){alert("একটি Rule লিখুন।");return}
+  if(editIndex===-1) rules.push(text); else rules[editIndex]=text;
+  saveData();renderRules();renderAdmin();clearForm();
+}
+function editRule(i){
+  editIndex=i;document.getElementById("ruleInput").value=rules[i];
+  document.getElementById("saveBtn").textContent="💾 Update Rule";
+  document.getElementById("ruleInput").focus();
+}
+function deleteRule(i){
+  if(confirm("এই Rule টি Delete করতে চান?")){rules.splice(i,1);saveData();renderRules();renderAdmin();clearForm()}
+}
+function clearForm(){editIndex=-1;document.getElementById("ruleInput").value="";document.getElementById("saveBtn").textContent="➕ Add Rule"}
+function logout(){sessionStorage.removeItem("adminLoggedIn");closeModal("adminModal")}
+function openModal(id){document.getElementById(id).style.display="block"}
+function closeModal(id){document.getElementById(id).style.display="none"}
+function updateTime(){
+  const now=new Date();
+  document.getElementById("date").textContent=now.toLocaleDateString("bn-BD",{weekday:"short",year:"numeric",month:"short",day:"numeric"});
+  document.getElementById("clock").textContent=now.toLocaleTimeString("en-GB");
+  document.getElementById("year").textContent=now.getFullYear();
+}
+renderRules();updateTime();setInterval(updateTime,1000);
+</script>
+</body>
+</html>
